@@ -63,3 +63,36 @@ Cortx Client usage
 
 ## interface:
 
+#### Create Cortx instance
+    
+    // Create Cortx client
+    // Host - The Cortx Maven Plugin host (normally localhost)
+    // Port - The port Cortx was set to listen to (defaults to 7919 if not passed)
+    final Cortx cortx = CortxFactory.getCortx("localhost", 12201);
+
+#### Response Registration
+
+    // Register response for when a given REST end-point url is hit
+    cortx.on().get("/my/app/url?with=params").returns(jsonString);
+    
+Available commands are: get(url), post(url) - other commands to be supported soon
+
+Available actions are: returns(body) - other return such has desired HTTP status, headers, etc to come soon.
+    
+#### Retrieve request details
+
+    // Retrieve submitted request information
+    final String requestBody = cortx.retrieve().post("/my/app/url?with=params").body();
+    
+Available commands are get(url), post(url) - others to be supported soon
+
+Available actions are body() - others such as request header(s) will come soon
+
+#### Verification/Validation
+
+    // Verify if REST end-point was hit
+    cortx.verify().post(url).wasCalled();
+    
+Available commands are get(url), post(url) - more to come soon
+
+Available actions are wasCalled() - more to come soon (times called, with body, with header(s), etc)
