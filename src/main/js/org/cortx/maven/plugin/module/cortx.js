@@ -10,7 +10,6 @@ if (JSON.stringify(config) == '{}') {
 
 function log(message) {
 	if (config.log && message != undefined) console.log(message);
-
 }
 
 function handleRegistration(req) {
