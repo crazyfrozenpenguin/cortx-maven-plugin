@@ -9,6 +9,7 @@ import org.cortx.maven.client.dsl.RetrieveOperation;
 import org.cortx.maven.client.dsl.VerifyOperation;
 
 public class CortxFactory implements Cortx {
+	public static final int DEFAULT_PORT = 7919;
 
 	private final URI cortxUrl;
 
@@ -18,7 +19,7 @@ public class CortxFactory implements Cortx {
 	}
 
 	public static Cortx getCortx(final String host, final Integer port) throws URISyntaxException {
-		return new CortxFactory(host, port == null ? 7919 : port);
+		return new CortxFactory(host, port == null ? DEFAULT_PORT : port);
 	}
 
 	@Override
@@ -35,6 +36,9 @@ public class CortxFactory implements Cortx {
 
 	@Override
 	public RetrieveOperation retrieve() {
+		// XXX verify and retrieve have the same append?
+		// I noticed in cortx.js that the path starts with ~, _ or nothing
+		// expected this to be nothing
 		operation = new StringBuffer(cortxUrl.toString()).append("/_/");
 		return new RetrieveOperationImpl(operation);
 	}

@@ -77,7 +77,7 @@ Cortx Client usage
     
 Available commands are: get(url), post(url) - other commands to be supported soon
 
-Available actions are: returns(body) - other return such has desired HTTP status, headers, etc to come soon.
+Available actions are: returns(body) - other return such as desired HTTP status, headers, etc to come soon.
     
 #### Retrieve request details
 
