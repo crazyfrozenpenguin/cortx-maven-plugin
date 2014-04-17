@@ -18,6 +18,11 @@ describe('The CortxLogger Spec', function () {
 		expect(logger).toBeDefined();
 	});
 
+	it('should be same instance', function () {
+		// Then
+		expect(logger).toBe(CortxLogger.instance());
+	});
+	
 	it('should log message', function () {
 		// Given
 		spyOn(logger.console, 'log');
