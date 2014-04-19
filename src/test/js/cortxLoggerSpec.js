@@ -13,6 +13,10 @@ describe('The CortxLogger Spec', function () {
 		message = 'test message';
 	});
 	
+	afterEach(function () {
+		logger.enabled = true;
+	});
+	
 	it('should return logger instance', function () {
 		// Then
 		expect(logger).toBeDefined();
@@ -82,4 +86,16 @@ describe('The CortxLogger Spec', function () {
 		expect(logger.console.log).not.toHaveBeenCalled();
 	});
 	
+	it('should log when enabled', function () {
+		// Given
+		spyOn(logger.console, 'log');
+		logger.disable();
+		
+		// When
+		logger.enable()
+		logger.log(message)
+		
+		// Then
+		expect(logger.console.log).toHaveBeenCalledWith(message);
+	});
 });

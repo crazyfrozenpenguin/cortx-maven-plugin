@@ -16,7 +16,7 @@ var CortxRegistry = function() {
 
 CortxRegistry.prototype.createRequestEntry = function(header, body) {
 	return {
-		header : {},
+		header : header,
 		body : body
 	};
 }
@@ -47,7 +47,6 @@ CortxRegistry.prototype.register = function(key, request) {
 		request.response.end();
 		this.log('\tRegistered request information:\n\tOn ' + key + '\n\tReturn body "' + body.toString() + '"\n');
 	};
-	
 	this.readRequestBody(request, processBody.bind(this));
 }
 
@@ -55,7 +54,13 @@ CortxRegistry.prototype.getProcessedRequest = function(key) {
 	if (key && this.processedRequests[key]) {
 		return this.processedRequests[key];
 	}
-	
+	return undefined;
+}
+
+CortxRegistry.prototype.getRegisteredRequests = function(key) {
+	if (key && this.registeredRequests[key]) {
+		return this.registeredRequests[key];
+	}	
 	return undefined;
 }
 
@@ -81,4 +86,4 @@ CortxRegistry.prototype.processRequest = function(key, request) {
 
 CortxRegistry.instance = function () {
 	return new CortxRegistry();
-};
+}

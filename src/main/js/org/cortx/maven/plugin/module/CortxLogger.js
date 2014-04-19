@@ -16,6 +16,10 @@ var CortxLogger = function () {
 		this.enabled = false;
 	}
 	
+	CortxLogger.prototype.enable = function () {
+		this.enabled = true;
+	}
+	
 	CortxLogger.prototype.logger = CortxLogger.prototype.log.bind(this);
 
 };
