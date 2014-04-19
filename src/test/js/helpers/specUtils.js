@@ -21,11 +21,13 @@ var MymeType = {
 }
 
 function Request() {
+
+	this.uriValue = '/test/uri'
 	this.body = '{body:"request"}'
 	this.endResponse = undefined
 	
-	this.uri = function() { 
-		return '/test/uri'
+	this.uri = function() { 	
+		return this.uriValue
 	};
 
 	this.method = function() {
