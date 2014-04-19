@@ -22,33 +22,34 @@ var MymeType = {
 
 function Request() {
 	this.body = '{body:"request"}'
+	this.endResponse = undefined
 	
 	this.uri = function() { 
-		return '/test/uri';
+		return '/test/uri'
 	};
 
 	this.method = function() {
-		return 'GET';
+		return 'GET'
 	};
 	
 	this.headers = function() {
-		var headers = {};
+		var headers = {}
 		headers[Headers.ACCEPT] = MymeType.APP_JSON
-		return headers;
+		return headers
 	};
 	
 	this.dataHandler = function(f) {
-		f(new vertx.Buffer().appendString(this.body));
+		f(new vertx.Buffer().appendString(this.body))
 	}
 	
 	this.endHandler = function(f) {
-		f();
+		f()
 	}
 	
 	this.response = {
-		end : function() {
-			// empty
-		}
+		end : function(response) {
+			this.endResponse = response
+		}.bind(this)
 	}
 }; 
 

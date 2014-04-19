@@ -7,29 +7,33 @@ load('org/cortx/maven/plugin/module/CortxRegistry.js');
 
 describe('The CortxRegistry Spec', function () {
 
-	var logger = CortxLogger.instance();
-
-	var registry;
+	var registry, request, key
 	
 	beforeEach(function () {
-		registry = CortxRegistry.instance();
-	});
+		request = new Request()
+		key = cortx.createKey(request)
+		registry = CortxRegistry.instance()
+	})
 	
 	it('should return registry instance', function () {
 		// Then
-		expect(registry).toBeDefined();
-	});
+		expect(registry).toBeDefined()
+	})
 
 	it('should be same instance', function () {
 		// Then
 		expect(registry).toBe(CortxRegistry.instance());
-	});
+	})
 	
-	it('should register request by URI based key', function () {
-		// Given
-		var request = new Request()
-		var key = cortx.createKey(request)
+	it('should register request details', function () {
+		// When
+		registry.register(key, request)
 		
+		// Then
+		expect(request.endResponse).not.toBeDefined()
+	})
+	
+	it('should retrieve registered request details', function () {
 		// When
 		registry.register(key, request)
 		var result = registry.getRegisteredRequests(key)
@@ -38,13 +42,24 @@ describe('The CortxRegistry Spec', function () {
 		expect(result).toBeDefined();
 		expect(result.header[Headers.ACCEPT]).toBe(MymeType.APP_JSON)
 		expect(result.body.toString()).toBe(request.body)
-	});
+	})
 	
-	it('should process request', function () {
+	it('should process request details', function () {
+		// When
+		registry.processRequest(key, request)
 		
-	});
-	
-	it('shuld access processed request by URI based key', function () {
+		// Then
+		expect(request.endResponse.toString()).toBe(request.body)
+	})
+
+	it('should retrieve process details', function () {
+		// When
+		registry.processRequest(key, request)
+		var result = registry.getProcessedRequest(key)
 		
-	});
+		// Then
+		expect(result).toBeDefined()
+		expect(result.header[Headers.ACCEPT]).toBe(MymeType.APP_JSON)
+		expect(result.body.toString()).toBe(request.body)
+	})
 });
