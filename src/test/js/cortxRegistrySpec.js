@@ -62,4 +62,16 @@ describe('The CortxRegistry Spec', function () {
 		expect(result.header[Headers.ACCEPT]).toBe(MymeType.APP_JSON)
 		expect(result.body.toString()).toBe(request.body)
 	})
+
+	it('should retrieve empty process details', function () {
+		// Given
+		request = new Request();
+		request.uriValue = '/not/registered/uri';
+		
+		// When
+		registry.processRequest(cortx.createKey(request), request)
+		
+		// Then
+		expect(request.endResponse).not.toBeDefined()
+	})
 });
