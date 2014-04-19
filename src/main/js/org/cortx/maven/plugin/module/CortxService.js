@@ -30,8 +30,7 @@
 	
 	function handleAPIRequest(request) {
 		log('Process REST API call...');
-		var uri = new String(request.uri());
-		var key = request.method() + ':' + uri;
+		var key = cortx.createKey(request);
 		cortxRegistry.processRequest(key, request);
 	}
 
@@ -44,9 +43,11 @@
 	
 	function handleVerification(request) {
 		log('Process verification...');
+		
 		var uri = new String(request.uri());
 		var context = uri.substring(4);
 		var key = undefined;
+		
 		if (uri.startsWith('/_/G/')) {
 			key = 'GET:' + context;
 		} else if (uri.startsWith('/_/P/')) {

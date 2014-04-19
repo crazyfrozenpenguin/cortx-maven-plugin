@@ -21,6 +21,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1;
       }
       return __complete;
     };
+    
   };
   module.exports = new Helper();
 
