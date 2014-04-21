@@ -1,7 +1,7 @@
 var helper = require('helpers/specHelper');
 
 load('helpers/specUtils.js');
-load('org/cortx/maven/plugin/module/common/JavaImports.js');
+load('org/cortx/maven/plugin/module/common/JSDefinitions.js');
 load('org/cortx/maven/plugin/module/CortxBase.js');
 load('org/cortx/maven/plugin/module/CortxRegistry.js');
 
