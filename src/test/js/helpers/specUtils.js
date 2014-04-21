@@ -3,7 +3,9 @@ var buffer = require('vertx/buffer');
 
 // Emulate Vertx Container
 var container = {
-	log: true
+	config: {
+		log: true
+	}
 };
 
 Object.prototype.forEach = function(f) {
@@ -25,13 +27,16 @@ function Request() {
 	this.uriValue = '/test/uri'
 	this.body = '{body:"request"}'
 	this.endResponse = undefined
-	
+	this.methodName = 'GET'
+		
 	this.uri = function() { 	
 		return this.uriValue
 	};
 
+	this.path = this.uri
+	
 	this.method = function() {
-		return 'GET'
+		return this.methodName
 	};
 	
 	this.headers = function() {
@@ -51,6 +56,16 @@ function Request() {
 	this.response = {
 		end : function(response) {
 			this.endResponse = response
+		}.bind(this),
+		
+		statusCode : function(code) {
+			this.statusCode = code
+			return this.response
+		}.bind(this),
+		
+		statusMessage : function(message) {
+			this.statusMessage = message
+			return this.response
 		}.bind(this)
 	}
 }; 
