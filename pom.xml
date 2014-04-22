@@ -10,7 +10,7 @@
 
   <groupId>org.cortx</groupId>
   <artifactId>cortx-maven-plugin</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <!-- This version is compliant with Vertx Maven Plugin 2.0.x -->
