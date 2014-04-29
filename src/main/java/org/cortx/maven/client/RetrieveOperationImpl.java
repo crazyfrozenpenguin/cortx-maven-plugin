@@ -14,20 +14,56 @@ public class RetrieveOperationImpl extends OperationBase implements RetrieveOper
 	}
 
 	@Override
-	public RetrieveCommand get(final String pathAndQuery) {
+	public RetrieveCommand get(final String pathAndQuery) throws Exception {
 		operation.append("G").append(pathAndQuery);
 		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
-	public RetrieveCommand post(final String pathAndQuery) {
+	public RetrieveCommand post(final String pathAndQuery) throws Exception {
 		operation.append("P").append(pathAndQuery);
 		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
-	public RetrieveCommand put(final String pathAndQuery) {
+	public RetrieveCommand put(final String pathAndQuery) throws Exception {
 		operation.append("U").append(pathAndQuery);
+		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
+	}
+
+	@Override
+	public RetrieveCommand delete(String pathAndQuery) throws Exception {
+		operation.append("D").append(pathAndQuery);
+		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
+	}
+
+	@Override
+	public RetrieveCommand head(String pathAndQuery) throws Exception {
+		operation.append("H").append(pathAndQuery);
+		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
+	}
+
+	@Override
+	public RetrieveCommand options(String pathAndQuery) throws Exception {
+		operation.append("O").append(pathAndQuery);
+		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
+	}
+
+	@Override
+	public RetrieveCommand connect(String pathAndQuery) throws Exception {
+		operation.append("C").append(pathAndQuery);
+		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
+	}
+
+	@Override
+	public RetrieveCommand trace(String pathAndQuery) throws Exception {
+		operation.append("T").append(pathAndQuery);
+		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
+	}
+
+	@Override
+	public RetrieveCommand patch(String pathAndQuery) throws Exception {
+		operation.append("A").append(pathAndQuery);
 		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
 

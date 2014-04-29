@@ -36,9 +36,6 @@ public class CortxFactory implements Cortx {
 
 	@Override
 	public RetrieveOperation retrieve() {
-		// XXX verify and retrieve have the same append?
-		// I noticed in cortx.js that the path starts with ~, _ or nothing
-		// expected this to be nothing
 		operation = new StringBuffer(cortxUrl.toString()).append("/_/");
 		return new RetrieveOperationImpl(operation);
 	}

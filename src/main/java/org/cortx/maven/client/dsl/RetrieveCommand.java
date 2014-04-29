@@ -3,9 +3,11 @@ package org.cortx.maven.client.dsl;
 import java.util.Map;
 
 public interface RetrieveCommand {
+	int statusCode();
+	
 	String body();
 
-	Map<String, String> header();
+	Map<String, String> headers();
 
-	String headerParam(final String name);
+	String header(final String name);
 }
