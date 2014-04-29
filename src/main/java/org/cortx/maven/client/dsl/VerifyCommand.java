@@ -7,7 +7,7 @@ public interface VerifyCommand {
 
 	VerifyCommand withBody(final String body);
 
-	VerifyCommand withHeader(final Map<String, String> header);
+	VerifyCommand withHeader(final String key, final String value);
 
-	VerifyCommand withHeaderParam(final String name);
+	VerifyCommand withHeader(final Map<String, String> header);
 }
