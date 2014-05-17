@@ -46,9 +46,16 @@
 		var key = cortx.createKey(request);
 		var processedRequest = cortxRegistry.getProcessedRequest(key);
 		if (processedRequest) {
-			log('\tVerified ' + key + '\n');
+			log('\tVerified ' + key + '\n')
+			if (processedRequest.header) {
+				for (var key in processedRequest.header) {
+					if (typeof processedRequest.header[key] !== 'function') {
+						request.response.putHeader('VERIFY_' + key, processedRequest.header[key])
+					}
+				}
+			}
 			if (processedRequest.body) {
-				log(processedRequest.body.toString())
+//				log(processedRequest.body.toString())
 				request.response.end(processedRequest.body);
 			} else {
 				log('Closing response...')

@@ -26,6 +26,11 @@ CortxRegistry.prototype.extractHeaders = function(request) {
 	request.headers().forEach(function(key, value) {
 		header[key] = value;
 	});
+	for (var k in header) {
+		if (typeof header[k] !== 'function') {
+			this.log('Key/value = ' + k + '/' + header[k])
+		}
+	}
 	return header;
 }
 

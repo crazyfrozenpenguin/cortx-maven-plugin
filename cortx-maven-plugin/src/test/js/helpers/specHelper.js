@@ -12,6 +12,7 @@ jasmine.WaitsForBlock.TIMEOUT_INCREMENT = 1;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1;
 
 (function() {
+	
   var Helper = function() {
     __complete = false;
 
@@ -23,6 +24,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1;
     };
     
   };
+  
   module.exports = new Helper();
 
 })();
