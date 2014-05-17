@@ -120,6 +120,7 @@ describe('The Cortx Service Spec', function () {
 		// Given
 		request.uriValue = '/my/uri?x=y'
 		request.methodName = 'GET'
+		request.putHeader('TEST-HEADER', 'header value')
 		cortx.handleAPIRequest(request)
 		
 		request.uriValue = '/_/G/my/uri?x=y'
@@ -132,6 +133,8 @@ describe('The Cortx Service Spec', function () {
 		
 		// Then
 		expect(registry.getProcessedRequest).toHaveBeenCalledWith(key)
+		expect(request.response.headers()[Headers.ACCEPT]).toBe(MymeType.APP_JSON)
+		expect(request.response.headers()['TEST-HEADER']).toBe('header value')
 		expect(request.response.end).toHaveBeenCalled()
 		expect(request.response.end.mostRecentCall.args[0].toString()).toBe(request.body)
 	})

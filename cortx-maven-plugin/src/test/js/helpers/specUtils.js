@@ -1,5 +1,7 @@
 var vertx = require('vertx');
 var buffer = require('vertx/buffer');
+var http = require('vertx/http');
+var multi_map = require('vertx/multi_map');
 
 // Emulate Vertx Container
 var container = {
@@ -28,6 +30,7 @@ function Request() {
 	this.body = '{body:"request"}'
 	this.endResponse = undefined
 	this.methodName = 'GET'
+	this._headers = {}
 		
 	this.uri = function() { 	
 		return this.uriValue
@@ -40,9 +43,8 @@ function Request() {
 	};
 	
 	this.headers = function() {
-		var headers = {}
-		headers[Headers.ACCEPT] = MymeType.APP_JSON
-		return headers
+		this._headers[Headers.ACCEPT] = MymeType.APP_JSON
+		return this._headers
 	};
 	
 	this.dataHandler = function(f) {
@@ -51,6 +53,12 @@ function Request() {
 	
 	this.endHandler = function(f) {
 		f()
+	}
+	
+	this.putHeader = function(key, value) {
+		if (key) {
+			this._headers[key] = value
+		}
 	}
 	
 	this.response = {
@@ -66,6 +74,14 @@ function Request() {
 		statusMessage : function(message) {
 			this.statusMessage = message
 			return this.response
+		}.bind(this),
+		
+		headers : function() {
+			return this._headers
+		}.bind(this),
+		
+		putHeader : function(key, value) {
+			this.putHeader(key, value)
 		}.bind(this)
 	}
 }; 

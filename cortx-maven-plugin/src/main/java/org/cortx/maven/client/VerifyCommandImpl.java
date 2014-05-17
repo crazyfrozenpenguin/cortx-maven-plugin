@@ -68,10 +68,10 @@ public class VerifyCommandImpl implements VerifyCommand {
 
 	private boolean validateHeaders(final HttpResponse response) {
 		for (final Entry<String, String> entry : header.entrySet()) {
-			if (response.containsHeader(entry.getKey())) {
+			if (response.containsHeader("VERIFY_" + entry.getKey())) {
 				if (entry.getValue() != null) {
 					boolean found = false;
-					for (final Header header : response.getHeaders(entry.getKey())) {
+					for (final Header header : response.getHeaders("VERIFY_" + entry.getKey())) {
 						if (entry.getValue().equals(header.getValue())) {
 							found = true;
 							break;
