@@ -46,7 +46,7 @@ public class VerifyOperationImpl extends OperationBase implements VerifyOperatio
 	@Override
 	public VerifyCommand options(final String pathAndQuery) {
 		operation.append("O").append(pathAndQuery);
-		return new VerifyCommandImpl(setDefaults(Get(operation.toString())));
+		return new OptionsVerifyCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
