@@ -2,6 +2,7 @@ package org.cortx.maven.client.dsl;
 
 import static org.apache.http.client.fluent.Request.Get;
 import static org.apache.http.client.fluent.Request.Post;
+import static org.apache.http.client.fluent.Request.Put;
 import static org.apache.http.entity.ContentType.DEFAULT_TEXT;
 import static org.cortx.maven.client.CortxFactory.getCortx;
 import static org.hamcrest.CoreMatchers.is;
@@ -94,4 +95,30 @@ public class CortxFactoryTest {
 		assertThat("Should verify POST to url with header was called", cortx.verify().post("/test/url").withHeader("Content-Type", DEFAULT_TEXT.toString()).withBody(CORTX_BODY).wasCalled(), is(true));
 	}
 
+	@Test
+	public void shouldVerifyOnPutWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Put("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify PUT to url was called", cortx.verify().put("/test/url").wasCalled(), is(true));
+	}
+	
+	@Test
+	public void shouldVerifyOnPutWithHeaderWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Put("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When/Then
+		assertThat("Should verify PUT to url with header was called", cortx.verify().put("/test/url").withHeader(CORTX_HEADER, TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnPutWithBodyWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Put("http://localhost:7919/test/url").bodyString(CORTX_BODY, DEFAULT_TEXT).execute();
+		
+		// When/Then
+		assertThat("Should verify PUT to url with header was called", cortx.verify().put("/test/url").withHeader("Content-Type", DEFAULT_TEXT.toString()).withBody(CORTX_BODY).wasCalled(), is(true));
+	}
 }
