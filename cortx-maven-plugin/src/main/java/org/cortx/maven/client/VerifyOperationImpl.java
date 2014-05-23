@@ -34,13 +34,13 @@ public class VerifyOperationImpl extends OperationBase implements VerifyOperatio
 	@Override
 	public VerifyCommand delete(final String pathAndQuery) {
 		operation.append("D").append(pathAndQuery);
-		return new VerifyCommandImpl(setDefaults(Get(operation.toString())));
+		return new DeleteVerifyCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
 	public VerifyCommand head(final String pathAndQuery) {
 		operation.append("H").append(pathAndQuery);
-		return new VerifyCommandImpl(setDefaults(Get(operation.toString())));
+		return new HeadVerifyCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
