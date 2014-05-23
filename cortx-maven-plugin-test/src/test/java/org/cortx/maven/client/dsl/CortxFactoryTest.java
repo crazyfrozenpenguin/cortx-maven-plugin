@@ -1,6 +1,9 @@
 package org.cortx.maven.client.dsl;
 
+import static org.apache.http.client.fluent.Request.Delete;
 import static org.apache.http.client.fluent.Request.Get;
+import static org.apache.http.client.fluent.Request.Head;
+import static org.apache.http.client.fluent.Request.Options;
 import static org.apache.http.client.fluent.Request.Post;
 import static org.apache.http.client.fluent.Request.Put;
 import static org.apache.http.entity.ContentType.DEFAULT_TEXT;
@@ -121,4 +124,77 @@ public class CortxFactoryTest {
 		// When/Then
 		assertThat("Should verify PUT to url with header was called", cortx.verify().put("/test/url").withHeader("Content-Type", DEFAULT_TEXT.toString()).withBody(CORTX_BODY).wasCalled(), is(true));
 	}
+	
+	@Test
+	public void shouldVerifyOnDeleteWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Delete("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify DELETE to url was called", cortx.verify().delete("/test/url").wasCalled(), is(true));
+	}
+	
+	@Test
+	public void shouldVerifyOnDeleteWithHeaderWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Delete("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When/Then
+		assertThat("Should verify DELETE to url with header was called", cortx.verify().delete("/test/url").withHeader(CORTX_HEADER, TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void shouldNotAllowVerifyOnDeleteWithBody() {
+		// When
+		cortx.verify().delete("/test/url").withBody(CORTX_BODY).wasCalled();		
+	}
+
+	@Test
+	public void shouldVerifyOnHeadWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Head("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify HEAD to url was called", cortx.verify().head("/test/url").wasCalled(), is(true));
+	}
+	
+	@Test
+	public void shouldVerifyOnHeadWithHeaderWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Head("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When/Then
+		assertThat("Should verify HEAD to url with header was called", cortx.verify().head("/test/url").withHeader(CORTX_HEADER, TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void shouldNotAllowVerifyOnHeadWithBody() {
+		// When
+		cortx.verify().head("/test/url").withBody(CORTX_BODY).wasCalled();		
+	}	
+
+	@Test
+	public void shouldVerifyOnOptionsWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Options("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify OPTIONS to url was called", cortx.verify().options("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnHeadWithOptionsWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Options("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When/Then
+		assertThat("Should verify OPTIONS to url with header was called", cortx.verify().options("/test/url").withHeader(CORTX_HEADER, TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void shouldNotAllowVerifyOnOptionsWithBody() {
+		// When
+		cortx.verify().options("/test/url").withBody(CORTX_BODY).wasCalled();		
+	}	
+
 }
