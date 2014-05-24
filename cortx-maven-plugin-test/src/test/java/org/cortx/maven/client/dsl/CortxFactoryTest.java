@@ -6,6 +6,7 @@ import static org.apache.http.client.fluent.Request.Head;
 import static org.apache.http.client.fluent.Request.Options;
 import static org.apache.http.client.fluent.Request.Post;
 import static org.apache.http.client.fluent.Request.Put;
+import static org.apache.http.client.fluent.Request.Trace;
 import static org.apache.http.entity.ContentType.DEFAULT_TEXT;
 import static org.cortx.maven.client.CortxFactory.getCortx;
 import static org.hamcrest.CoreMatchers.is;
@@ -16,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import org.apache.http.client.fluent.Request;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -183,7 +185,7 @@ public class CortxFactoryTest {
 	}
 
 	@Test
-	public void shouldVerifyOnHeadWithOptionsWasCalled() throws MalformedURLException, IOException {
+	public void shouldVerifyOnOptionsWithHeaderWasCalled() throws MalformedURLException, IOException {
 		// Given
 		Options("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
 		
@@ -195,6 +197,30 @@ public class CortxFactoryTest {
 	public void shouldNotAllowVerifyOnOptionsWithBody() {
 		// When
 		cortx.verify().options("/test/url").withBody(CORTX_BODY).wasCalled();		
+	}	
+
+	@Test
+	public void shouldVerifyOnTraceWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Trace("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify TRACE to url was called", cortx.verify().trace("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnTraceWithHeaderWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Trace("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When/Then
+		assertThat("Should verify TRACE to url with header was called", cortx.verify().trace("/test/url").withHeader(CORTX_HEADER, TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void shouldNotAllowVerifyOnTraceWithBody() {
+		// When
+		cortx.verify().trace("/test/url").withBody(CORTX_BODY).wasCalled();		
 	}	
 
 }

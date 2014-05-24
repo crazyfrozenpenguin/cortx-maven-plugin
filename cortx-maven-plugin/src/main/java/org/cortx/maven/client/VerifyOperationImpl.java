@@ -58,7 +58,7 @@ public class VerifyOperationImpl extends OperationBase implements VerifyOperatio
 	@Override
 	public VerifyCommand trace(final String pathAndQuery) {
 		operation.append("T").append(pathAndQuery);
-		return new VerifyCommandImpl(setDefaults(Get(operation.toString())));
+		return new TraceVerifyCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
