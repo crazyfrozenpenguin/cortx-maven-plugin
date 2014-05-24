@@ -24,7 +24,7 @@ Starts the cortx server in blocking mode.
     <plugin>
       <groupId>org.cortx</groupId>
       <artifactId>cortx-maven-plugin</artifactId>
-      <version>2.0.5-final</version>
+      <version>0.1.1</version>
       <configuration>
       	<log>true</log>
       	<port>7919</port>
@@ -48,7 +48,7 @@ Starts the cortx server in blocking mode.
     </plugin>
 
 
-Cortx Client usage
+Cortx DSL Client usage
 ------------------
 
 ## configuration:
@@ -56,7 +56,7 @@ Cortx Client usage
    	<dependency>
       <groupId>org.cortx</groupId>
       <artifactId>cortx-maven-plugin</artifactId>
-      <version>2.0.5-final</version>
+      <version>0.1.1</version>
       <scope>test</scope>
     </dependency>
 
@@ -91,8 +91,10 @@ Available actions are body() - others such as request header(s) will come soon
 #### Verification/Validation
 
     // Verify if REST end-point was hit
-    cortx.verify().post(url).wasCalled();
+	cortx.verify().post("/my/app/url?with=params").withHeader("Content-Type", "application/json").withBody("{}").wasCalled();
     
-Available commands are get(url), post(url) - more to come soon
+Available commands are get, post, put, delete, head, options and trace
 
-Available actions are wasCalled() - more to come soon (times called, with body, with header(s), etc)
+#### Reset Cortx server state
+
+	cortx.reset();
