@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
@@ -221,6 +222,5 @@ public class CortxFactoryTest {
 	public void shouldNotAllowVerifyOnTraceWithBody() {
 		// When
 		cortx.verify().trace("/test/url").withBody(CORTX_BODY).wasCalled();		
-	}	
-
+	}
 }
