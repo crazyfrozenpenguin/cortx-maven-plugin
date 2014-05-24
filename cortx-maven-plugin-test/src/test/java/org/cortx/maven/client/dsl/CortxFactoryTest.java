@@ -18,7 +18,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Request;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
