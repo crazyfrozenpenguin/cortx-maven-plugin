@@ -6,4 +6,6 @@ public interface Cortx {
 	VerifyOperation verify();
 
 	RetrieveOperation retrieve();
+	
+	boolean reset();
 }

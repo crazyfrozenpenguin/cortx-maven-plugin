@@ -139,4 +139,16 @@ describe('The Cortx Service Spec', function () {
 		expect(request.response.end.mostRecentCall.args[0].toString()).toBe(request.body)
 	})
 
+	it('should reset registry', function () {
+		// Given
+		request.uriValue = '/$'
+		spyOn(CortxRegistry.instance(), 'reset')
+		
+		// When
+		cortx.requestHandler(request)
+		
+		// Then
+		expect(CortxRegistry.instance().reset).toHaveBeenCalled()
+	})
+	
 });

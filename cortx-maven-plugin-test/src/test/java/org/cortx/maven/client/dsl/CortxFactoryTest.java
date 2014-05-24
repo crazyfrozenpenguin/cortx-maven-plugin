@@ -223,4 +223,17 @@ public class CortxFactoryTest {
 		// When
 		cortx.verify().trace("/test/url").withBody(CORTX_BODY).wasCalled();		
 	}
+		
+	@Test
+	public void shouldResetServer() throws ClientProtocolException, IOException {
+		// Given
+		Get("http://localhost:7919/test/url").execute();
+		
+		// When
+		cortx.reset();
+		
+		// Then
+		assertThat("Should reset CortX server", cortx.verify().get("/test/url").wasCalled(), is(false));
+	}
+
 }

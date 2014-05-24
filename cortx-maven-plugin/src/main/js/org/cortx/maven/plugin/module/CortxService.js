@@ -23,6 +23,10 @@
 			this.handleRegistration(request)
 		} else if (path.startsWith('/_/')) {
 			this.handleVerification(request)
+		} else if (path.startsWith('/$')) {
+			cortxRegistry.reset()
+			log('Registry reset.')
+			request.response.end()
 		} else { 
 			this.handleAPIRequest(request)
 		}
