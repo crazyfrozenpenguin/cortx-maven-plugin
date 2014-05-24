@@ -6,12 +6,16 @@ var CortxRegistry = function() {
 
 	CortxRegistry.prototype._singletonInstance = this;
 	
-	this.registeredRequests = {};
-	this.processedRequests = {};
-
 	this.log = CortxLogger.instance().logger;
+
+	this.reset();
 	
 	return this;
+}
+
+CortxRegistry.prototype.reset = function() {
+	this.registeredRequests = {};
+	this.processedRequests = {};	
 }
 
 CortxRegistry.prototype.createRequestEntry = function(header, body) {

@@ -74,4 +74,18 @@ describe('The CortxRegistry Spec', function () {
 		// Then
 		expect(request.endResponse).not.toBeDefined()
 	})
+	
+	it('should reset registry', function () {
+		// Given
+		registry.registeredRequests['foo'] = 'foo'
+		registry.processedRequests['baa'] = 'baa'
+		
+		// When
+		registry.reset()
+		
+		// Then
+		expect(Object.keys(registry.registeredRequests).length).toBe(0)
+		expect(Object.keys(registry.processedRequests).length).toBe(0)
+	})
+
 });
