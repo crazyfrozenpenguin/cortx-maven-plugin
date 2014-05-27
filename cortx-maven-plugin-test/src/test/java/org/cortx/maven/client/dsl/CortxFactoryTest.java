@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Map;
 
 import org.apache.http.client.ClientProtocolException;
 import org.hamcrest.CoreMatchers;
@@ -234,5 +235,317 @@ public class CortxFactoryTest {
 		// Then
 		assertThat("Should reset CortX server", cortx.verify().get("/test/url").wasCalled(), is(false));
 	}
+	
+	@Test
+	public void shouldRetrieveGetStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		Get("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().get("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(200));
+	}
+	
+	@Test
+	public void shouldRetrieveGetHeader() throws ClientProtocolException, IOException {
+		// Given
+		Get("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final String header = cortx.retrieve().get("/test/url").header(CORTX_HEADER);
+		
+		// Then
+		assertThat(header, is(TEST_VALUE));
+	}
 
+	@Test
+	public void shouldRetrieveGetHeaders() throws ClientProtocolException, IOException {
+		// Given
+		Get("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final Map<String, String> headers = cortx.retrieve().get("/test/url").headers();
+		
+		// Then
+		assertThat(headers.containsKey(CORTX_HEADER), is(true));
+		assertThat(headers.get(CORTX_HEADER), is(TEST_VALUE));
+	}
+	
+	@Test(expected = UnsupportedOperationException.class)
+	public void shouldNotAllowToRetrieveGetBody() throws ClientProtocolException, IOException {
+		// Given/When/Then
+		cortx.retrieve().get("/test/url").body();
+	}
+	
+	@Test
+	public void shouldRetrievePostStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		Post("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().post("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(200));
+	}
+
+	@Test
+	public void shouldRetrievePostHeader() throws ClientProtocolException, IOException {
+		// Given
+		Post("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final String header = cortx.retrieve().post("/test/url").header(CORTX_HEADER);
+		
+		// Then
+		assertThat(header, is(TEST_VALUE));
+	}
+
+	@Test
+	public void shouldRetrievePostHeaders() throws ClientProtocolException, IOException {
+		// Given
+		Post("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final Map<String, String> headers = cortx.retrieve().post("/test/url").headers();
+		
+		// Then
+		assertThat(headers.containsKey(CORTX_HEADER), is(true));
+		assertThat(headers.get(CORTX_HEADER), is(TEST_VALUE));
+	}
+	
+	@Test
+	public void shouldRetrievePostBody() throws ClientProtocolException, IOException {
+		// Given
+		Post("http://localhost:7919/test/url").bodyString(CORTX_BODY, DEFAULT_TEXT).execute();
+		
+		// When
+		final String body = cortx.retrieve().post("/test/url").body();
+		
+		// Then
+		assertThat(body, is(CORTX_BODY));
+	}
+	
+	@Test
+	public void shouldRetrievePutStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		Put("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().put("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(200));
+	}
+
+	@Test
+	public void shouldRetrievePutHeader() throws ClientProtocolException, IOException {
+		// Given
+		Put("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final String header = cortx.retrieve().put("/test/url").header(CORTX_HEADER);
+		
+		// Then
+		assertThat(header, is(TEST_VALUE));
+	}
+
+	@Test
+	public void shouldRetrievePutHeaders() throws ClientProtocolException, IOException {
+		// Given
+		Put("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final Map<String, String> headers = cortx.retrieve().put("/test/url").headers();
+		
+		// Then
+		assertThat(headers.containsKey(CORTX_HEADER), is(true));
+		assertThat(headers.get(CORTX_HEADER), is(TEST_VALUE));
+	}
+	
+	@Test
+	public void shouldRetrievePutBody() throws ClientProtocolException, IOException {
+		// Given
+		Put("http://localhost:7919/test/url").bodyString(CORTX_BODY, DEFAULT_TEXT).execute();
+		
+		// When
+		final String body = cortx.retrieve().put("/test/url").body();
+		
+		// Then
+		assertThat(body, is(CORTX_BODY));
+	}
+	
+	@Test
+	public void shouldRetrieveDeleteStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		Delete("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().delete("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(200));
+	}
+	
+	@Test
+	public void shouldRetrieveDeleteHeader() throws ClientProtocolException, IOException {
+		// Given
+		Delete("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final String header = cortx.retrieve().delete("/test/url").header(CORTX_HEADER);
+		
+		// Then
+		assertThat(header, is(TEST_VALUE));
+	}
+
+	@Test
+	public void shouldRetrieveDeleteHeaders() throws ClientProtocolException, IOException {
+		// Given
+		Delete("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final Map<String, String> headers = cortx.retrieve().delete("/test/url").headers();
+		
+		// Then
+		assertThat(headers.containsKey(CORTX_HEADER), is(true));
+		assertThat(headers.get(CORTX_HEADER), is(TEST_VALUE));
+	}
+	
+	@Test(expected = UnsupportedOperationException.class)
+	public void shouldNotAllowToRetrieveDeleteBody() throws ClientProtocolException, IOException {
+		// Given/When/Then
+		cortx.retrieve().delete("/test/url").body();
+	}
+
+	@Test
+	public void shouldRetrieveHeadStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		Head("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().head("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(200));
+	}
+	
+	@Test
+	public void shouldRetrieveHeadHeader() throws ClientProtocolException, IOException {
+		// Given
+		Head("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final String header = cortx.retrieve().head("/test/url").header(CORTX_HEADER);
+		
+		// Then
+		assertThat(header, is(TEST_VALUE));
+	}
+
+	@Test
+	public void shouldRetrieveHeadHeaders() throws ClientProtocolException, IOException {
+		// Given
+		Head("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final Map<String, String> headers = cortx.retrieve().head("/test/url").headers();
+		
+		// Then
+		assertThat(headers.containsKey(CORTX_HEADER), is(true));
+		assertThat(headers.get(CORTX_HEADER), is(TEST_VALUE));
+	}
+	
+	@Test(expected = UnsupportedOperationException.class)
+	public void shouldNotAllowToRetrieveHeadBody() throws ClientProtocolException, IOException {
+		// Given/When/Then
+		cortx.retrieve().head("/test/url").body();
+	}
+
+	@Test
+	public void shouldRetrieveOptionsStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		Options("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().options("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(200));
+	}
+	
+	@Test
+	public void shouldRetrieveOptionsHeader() throws ClientProtocolException, IOException {
+		// Given
+		Options("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final String header = cortx.retrieve().options("/test/url").header(CORTX_HEADER);
+		
+		// Then
+		assertThat(header, is(TEST_VALUE));
+	}
+
+	@Test
+	public void shouldRetrieveOptionsHeaders() throws ClientProtocolException, IOException {
+		// Given
+		Options("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final Map<String, String> headers = cortx.retrieve().options("/test/url").headers();
+		
+		// Then
+		assertThat(headers.containsKey(CORTX_HEADER), is(true));
+		assertThat(headers.get(CORTX_HEADER), is(TEST_VALUE));
+	}
+	
+	@Test(expected = UnsupportedOperationException.class)
+	public void shouldNotAllowToRetrieveOptionsBody() throws ClientProtocolException, IOException {
+		// Given/When/Then
+		cortx.retrieve().options("/test/url").body();
+	}
+
+	@Test
+	public void shouldRetrieveTraceStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		Trace("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().trace("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(200));
+	}
+	
+	@Test
+	public void shouldRetrieveTraceHeader() throws ClientProtocolException, IOException {
+		// Given
+		Trace("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final String header = cortx.retrieve().trace("/test/url").header(CORTX_HEADER);
+		
+		// Then
+		assertThat(header, is(TEST_VALUE));
+	}
+
+	@Test
+	public void shouldRetrieveTraceHeaders() throws ClientProtocolException, IOException {
+		// Given
+		Trace("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
+		
+		// When
+		final Map<String, String> headers = cortx.retrieve().trace("/test/url").headers();
+		
+		// Then
+		assertThat(headers.containsKey(CORTX_HEADER), is(true));
+		assertThat(headers.get(CORTX_HEADER), is(TEST_VALUE));
+	}
+	
+	@Test(expected = UnsupportedOperationException.class)
+	public void shouldNotAllowToRetrieveTraceBody() throws ClientProtocolException, IOException {
+		// Given/When/Then
+		cortx.retrieve().trace("/test/url").body();
+	}
 }
