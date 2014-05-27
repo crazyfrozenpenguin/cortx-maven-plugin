@@ -14,55 +14,55 @@ public class RetrieveOperationImpl extends OperationBase implements RetrieveOper
 	}
 
 	@Override
-	public RetrieveCommand get(final String pathAndQuery) throws Exception {
+	public RetrieveCommand get(final String pathAndQuery) {
 		operation.append("G").append(pathAndQuery);
-		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
+		return new NoBodyRetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
-	public RetrieveCommand post(final String pathAndQuery) throws Exception {
+	public RetrieveCommand post(final String pathAndQuery) {
 		operation.append("P").append(pathAndQuery);
 		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
-	public RetrieveCommand put(final String pathAndQuery) throws Exception {
+	public RetrieveCommand put(final String pathAndQuery) {
 		operation.append("U").append(pathAndQuery);
 		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
-	public RetrieveCommand delete(String pathAndQuery) throws Exception {
+	public RetrieveCommand delete(String pathAndQuery) {
 		operation.append("D").append(pathAndQuery);
-		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
+		return new NoBodyRetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
-	public RetrieveCommand head(String pathAndQuery) throws Exception {
+	public RetrieveCommand head(String pathAndQuery) {
 		operation.append("H").append(pathAndQuery);
-		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
+		return new NoBodyRetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
-	public RetrieveCommand options(String pathAndQuery) throws Exception {
+	public RetrieveCommand options(String pathAndQuery) {
 		operation.append("O").append(pathAndQuery);
-		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
+		return new NoBodyRetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
-	public RetrieveCommand connect(String pathAndQuery) throws Exception {
+	public RetrieveCommand connect(String pathAndQuery) {
 		operation.append("C").append(pathAndQuery);
 		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
-	public RetrieveCommand trace(String pathAndQuery) throws Exception {
+	public RetrieveCommand trace(String pathAndQuery) {
 		operation.append("T").append(pathAndQuery);
-		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
+		return new NoBodyRetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
-	public RetrieveCommand patch(String pathAndQuery) throws Exception {
+	public RetrieveCommand patch(String pathAndQuery) {
 		operation.append("A").append(pathAndQuery);
 		return new RetrieveCommandImpl(setDefaults(Get(operation.toString())));
 	}
