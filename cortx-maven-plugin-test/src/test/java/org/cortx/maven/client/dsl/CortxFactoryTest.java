@@ -15,7 +15,6 @@ import static org.junit.Assert.assertThat;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Map;
 
 import org.apache.http.client.ClientProtocolException;
@@ -79,6 +78,45 @@ public class CortxFactoryTest {
 	}
 	
 	@Test
+	public void shouldVerifyOnGetWithStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().get("/test/url").returnStatus(STATUS_204).response();
+		Get("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status code", cortx.verify().get("/test/url").withStatusCode(STATUS_204).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnGetWithDefaultStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Get("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected default status code", cortx.verify().get("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnGetWithStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().get("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Get("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status message", cortx.verify().get("/test/url").withStatusMessage(TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnGetWithDefaultStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().get("/test/url").response();
+		Get("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with default status message", cortx.verify().get("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
 	public void shouldVerifyOnPostWasCalled() throws MalformedURLException, IOException {
 		// Given
 		Post("http://localhost:7919/test/url").execute();
@@ -103,6 +141,45 @@ public class CortxFactoryTest {
 		
 		// When/Then
 		assertThat("Should verify POST to url with header was called", cortx.verify().post("/test/url").withHeader("Content-Type", DEFAULT_TEXT.toString()).withBody(CORTX_BODY).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnPostWithStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().post("/test/url").returnStatus(STATUS_204).response();
+		Post("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status code", cortx.verify().post("/test/url").withStatusCode(STATUS_204).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnPostWithDefaultStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Post("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected default status code", cortx.verify().post("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnPostWithStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().post("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Post("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status message", cortx.verify().post("/test/url").withStatusMessage(TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnPostWithDefaultStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().post("/test/url").response();
+		Post("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with default status message", cortx.verify().post("/test/url").wasCalled(), is(true));
 	}
 
 	@Test
@@ -133,6 +210,45 @@ public class CortxFactoryTest {
 	}
 	
 	@Test
+	public void shouldVerifyOnPutWithStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().put("/test/url").returnStatus(STATUS_204).response();
+		Put("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status code", cortx.verify().put("/test/url").withStatusCode(STATUS_204).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnPutWithDefaultStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Put("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected default status code", cortx.verify().put("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnPutWithStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().put("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Put("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status message", cortx.verify().put("/test/url").withStatusMessage(TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnPutWithDefaultStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().put("/test/url").response();
+		Put("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with default status message", cortx.verify().put("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
 	public void shouldVerifyOnDeleteWasCalled() throws MalformedURLException, IOException {
 		// Given
 		Delete("http://localhost:7919/test/url").execute();
@@ -154,6 +270,45 @@ public class CortxFactoryTest {
 	public void shouldNotAllowVerifyOnDeleteWithBody() {
 		// When
 		cortx.verify().delete("/test/url").withBody(CORTX_BODY).wasCalled();		
+	}
+
+	@Test
+	public void shouldVerifyOnDeleteWithStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().delete("/test/url").returnStatus(STATUS_204).response();
+		Delete("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status code", cortx.verify().delete("/test/url").withStatusCode(STATUS_204).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnDeleteWithDefaultStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Delete("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected default status code", cortx.verify().delete("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnDeleteWithStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().delete("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Delete("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status message", cortx.verify().delete("/test/url").withStatusMessage(TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnDeleteWithDefaultStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().delete("/test/url").response();
+		Delete("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with default status message", cortx.verify().delete("/test/url").wasCalled(), is(true));
 	}
 
 	@Test
@@ -181,6 +336,45 @@ public class CortxFactoryTest {
 	}	
 
 	@Test
+	public void shouldVerifyOnHeadWithStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().head("/test/url").returnStatus(STATUS_204).response();
+		Head("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status code", cortx.verify().head("/test/url").withStatusCode(STATUS_204).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnHeadWithDefaultStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Head("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected default status code", cortx.verify().head("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnHeadWithStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().head("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Head("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status message", cortx.verify().head("/test/url").withStatusMessage(TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnHeadWithDefaultStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().head("/test/url").response();
+		Head("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with default status message", cortx.verify().head("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
 	public void shouldVerifyOnOptionsWasCalled() throws MalformedURLException, IOException {
 		// Given
 		Options("http://localhost:7919/test/url").execute();
@@ -203,6 +397,45 @@ public class CortxFactoryTest {
 		// When
 		cortx.verify().options("/test/url").withBody(CORTX_BODY).wasCalled();		
 	}	
+
+	@Test
+	public void shouldVerifyOnOptionsWithStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().options("/test/url").returnStatus(STATUS_204).response();
+		Options("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status code", cortx.verify().options("/test/url").withStatusCode(STATUS_204).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnOptionsWithDefaultStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Options("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected default status code", cortx.verify().options("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnOptionsWithStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().options("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Options("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status message", cortx.verify().options("/test/url").withStatusMessage(TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnOptionsWithDefaultStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().options("/test/url").response();
+		Options("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with default status message", cortx.verify().options("/test/url").wasCalled(), is(true));
+	}
 
 	@Test
 	public void shouldVerifyOnTraceWasCalled() throws MalformedURLException, IOException {
@@ -228,6 +461,45 @@ public class CortxFactoryTest {
 		cortx.verify().trace("/test/url").withBody(CORTX_BODY).wasCalled();		
 	}
 		
+	@Test
+	public void shouldVerifyOnTraceWithStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().trace("/test/url").returnStatus(STATUS_204).response();
+		Trace("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status code", cortx.verify().trace("/test/url").withStatusCode(STATUS_204).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnTraceWithDefaultStatusCodeWasCalled() throws MalformedURLException, IOException {
+		// Given
+		Trace("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected default status code", cortx.verify().trace("/test/url").wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnTraceWithStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().trace("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Trace("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with expected status message", cortx.verify().trace("/test/url").withStatusMessage(TEST_VALUE).wasCalled(), is(true));
+	}
+
+	@Test
+	public void shouldVerifyOnTraceWithDefaultStatusMessageWasCalled() throws MalformedURLException, IOException {
+		// Given
+		cortx.on().trace("/test/url").response();
+		Trace("http://localhost:7919/test/url").execute();
+		
+		// When/Then
+		assertThat("Should verify url got called with default status message", cortx.verify().trace("/test/url").wasCalled(), is(true));
+	}
+
 	@Test
 	public void shouldResetServer() throws ClientProtocolException, IOException {
 		// Given
@@ -531,7 +803,7 @@ public class CortxFactoryTest {
 		// Then
 		assertThat(message, is("OK"));
 	}
-	
+
 	@Test
 	public void shouldRetrieveSpecifiedDeleteStatusMessage() throws ClientProtocolException, IOException {
 		// Given
@@ -544,7 +816,7 @@ public class CortxFactoryTest {
 		// Then
 		assertThat(message, is(TEST_VALUE));
 	}
-	
+
 	@Test
 	public void shouldRetrieveDeleteHeader() throws ClientProtocolException, IOException {
 		// Given

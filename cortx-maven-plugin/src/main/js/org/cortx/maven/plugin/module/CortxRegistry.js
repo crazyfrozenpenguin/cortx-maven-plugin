@@ -30,11 +30,6 @@ CortxRegistry.prototype.extractHeaders = function(request) {
 	request.headers().forEach(function(key, value) {
 		header[key] = value;
 	});
-	for (var k in header) {
-		if (typeof header[k] !== 'function') {
-			this.log('Key/value = ' + k + '/' + header[k])
-		}
-	}
 	return header;
 }
 
@@ -84,12 +79,12 @@ CortxRegistry.prototype.processRequest = function(key, request) {
 			if (this.registeredRequests[key].header) {
 				for (var hkey in this.registeredRequests[key].header) {
 					if (typeof this.registeredRequests[key].header[hkey] !== 'function') {
-						this.log('\tReturned header: "' + hkey + ' = ' + this.registeredRequests[key].header[hkey] + '\"');
 						if (hkey == 'REGISTER_HTTP_STATUS_CODE') {
 							request.response.statusCode(parseInt(this.registeredRequests[key].header[hkey]));
 						} else if (hkey == 'REGISTER_HTTP_STATUS_MESSAGE') {
 							request.response.statusMessage(this.registeredRequests[key].header[hkey]);
 						} else {
+							this.log('\tReturned header: "' + hkey + ' = ' + this.registeredRequests[key].header[hkey] + '\"');
 							request.response.putHeader(hkey, this.registeredRequests[key].header[hkey]);
 						}
 					}

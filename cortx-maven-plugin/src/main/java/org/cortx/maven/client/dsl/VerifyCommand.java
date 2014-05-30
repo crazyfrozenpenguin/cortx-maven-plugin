@@ -10,4 +10,8 @@ public interface VerifyCommand {
 	VerifyCommand withHeader(final String key, final String value);
 
 	VerifyCommand withHeader(final Map<String, String> header);
+	
+	VerifyCommand withStatusCode(final int status);
+
+	VerifyCommand withStatusMessage(final String message);
 }

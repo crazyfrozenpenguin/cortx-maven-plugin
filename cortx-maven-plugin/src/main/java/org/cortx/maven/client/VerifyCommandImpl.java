@@ -19,6 +19,8 @@ public class VerifyCommandImpl implements VerifyCommand {
 	protected static Logger logger = getLogger(VerifyCommandImpl.class);
 
 	protected final Request request;
+	protected Integer statusCode;
+	protected String statusMessage;
 	protected String body;
 	protected Map<String, String> header = new HashMap<String, String>();
 
@@ -30,7 +32,7 @@ public class VerifyCommandImpl implements VerifyCommand {
 	public boolean wasCalled() {
 		try {
 			HttpResponse response = request.execute().returnResponse();
-			return validateStatusCode(response) && validateHeaders(response) && validateBody(response);
+			return validateStatusCode(response) && validateHeaders(response) && validateBody(response) && validateExpectedStatus(response);
 		} catch (final Exception e) {
 			logger.error("Failed to verify call: ", e);
 		}
@@ -52,6 +54,18 @@ public class VerifyCommandImpl implements VerifyCommand {
 	@Override
 	public VerifyCommand withHeader(final Map<String, String> header) {
 		this.header = header;
+		return this;
+	}
+
+	@Override
+	public VerifyCommand withStatusCode(int status) {
+		this.statusCode = status;
+		return this;
+	}
+
+	@Override
+	public VerifyCommand withStatusMessage(String message) {
+		this.statusMessage = message;
 		return this;
 	}
 	
@@ -80,7 +94,25 @@ public class VerifyCommandImpl implements VerifyCommand {
 					if (!found)	return false;
 				}
 			} else {
-				logger.info("Failed to verify header: " + entry.getKey() + " not included." );
+				logger.error("Failed to verify header: " + entry.getKey() + " not included." );
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private boolean validateExpectedStatus(final HttpResponse response) {
+		if (statusCode != null) {
+			if (response.containsHeader("REGISTER_HTTP_STATUS_CODE")) {
+				return statusCode.intValue() == Integer.valueOf(response.getFirstHeader("REGISTER_HTTP_STATUS_CODE").getValue());
+			} else {
+				return statusCode == 200;
+			}
+		}
+		if (statusMessage != null) {
+			if (response.containsHeader("REGISTER_HTTP_STATUS_MESSAGE")) {
+				return statusMessage.equals(response.getFirstHeader("REGISTER_HTTP_STATUS_MESSAGE").getValue());
+			} else {
 				return false;
 			}
 		}

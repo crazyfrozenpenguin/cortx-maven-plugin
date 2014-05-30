@@ -69,11 +69,9 @@
 				var registeredRequest = cortxRegistry.getRegisteredRequest(key);
 				if (registeredRequest) {
 					if (registeredRequest.header['REGISTER_HTTP_STATUS_CODE']) {
-						log(registeredRequest.header['REGISTER_HTTP_STATUS_CODE']);
 						request.response.putHeader('REGISTER_HTTP_STATUS_CODE', registeredRequest.header['REGISTER_HTTP_STATUS_CODE']);
 					}
 					if (registeredRequest.header['REGISTER_HTTP_STATUS_MESSAGE']) {
-						log(registeredRequest.header['REGISTER_HTTP_STATUS_MESSAGE']);
 						request.response.putHeader('REGISTER_HTTP_STATUS_MESSAGE', registeredRequest.header['REGISTER_HTTP_STATUS_MESSAGE']);
 					}
 				}
