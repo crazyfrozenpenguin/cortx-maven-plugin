@@ -35,6 +35,8 @@ public class CortxFactoryTest {
 	@Before
 	public void setUp() throws URISyntaxException {
 		cortx = getCortx("localhost");
+		
+		cortx.reset();
 	}
 	
 	@Test
@@ -55,7 +57,7 @@ public class CortxFactoryTest {
 	@Test
 	public void shouldVerifyOnGetWasCalled() throws MalformedURLException, IOException {
 		// Given
-		new URL("http://localhost:7919/test/url").openConnection().connect();
+		Get("http://localhost:7919/test/url").execute();
 		
 		// When/Then
 		assertThat("Should verify url was called", cortx.verify().get("/test/url").wasCalled(), is(true));
@@ -251,6 +253,44 @@ public class CortxFactoryTest {
 	}
 	
 	@Test
+	public void shouldRetrieveSpecifiedGetStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().get("/test/url").returnStatus(STATUS_204).response();
+		Get("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().get("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRetrieveGetStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		Get("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().get("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is("OK"));
+	}
+	
+	@Test
+	public void shouldRetrieveSpecifiedGetStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().get("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Get("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().get("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is(TEST_VALUE));
+	}
+	
+	@Test
 	public void shouldRetrieveGetHeader() throws ClientProtocolException, IOException {
 		// Given
 		Get("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
@@ -293,6 +333,44 @@ public class CortxFactoryTest {
 		assertThat(status, is(200));
 	}
 
+	@Test
+	public void shouldRetrieveSpecifiedPostStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().post("/test/url").returnStatus(STATUS_204).response();
+		Post("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().post("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRetrievePostStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		Post("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().post("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is("OK"));
+	}
+	
+	@Test
+	public void shouldRetrieveSpecifiedPostStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().post("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Post("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().post("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is(TEST_VALUE));
+	}
+	
 	@Test
 	public void shouldRetrievePostHeader() throws ClientProtocolException, IOException {
 		// Given
@@ -343,6 +421,44 @@ public class CortxFactoryTest {
 	}
 
 	@Test
+	public void shouldRetrieveSpecifiedPutStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().put("/test/url").returnStatus(STATUS_204).response();
+		Put("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().put("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRetrievePutStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		Put("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().put("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is("OK"));
+	}
+	
+	@Test
+	public void shouldRetrieveSpecifiedPutStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().put("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Put("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().put("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is(TEST_VALUE));
+	}
+	
+	@Test
 	public void shouldRetrievePutHeader() throws ClientProtocolException, IOException {
 		// Given
 		Put("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
@@ -392,6 +508,44 @@ public class CortxFactoryTest {
 	}
 	
 	@Test
+	public void shouldRetrieveSpecifiedDeleteStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().delete("/test/url").returnStatus(STATUS_204).response();
+		Delete("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().delete("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRetrieveDeleteStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		Delete("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().delete("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is("OK"));
+	}
+	
+	@Test
+	public void shouldRetrieveSpecifiedDeleteStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().delete("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Delete("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().delete("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is(TEST_VALUE));
+	}
+	
+	@Test
 	public void shouldRetrieveDeleteHeader() throws ClientProtocolException, IOException {
 		// Given
 		Delete("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
@@ -432,6 +586,44 @@ public class CortxFactoryTest {
 		
 		// Then
 		assertThat(status, is(200));
+	}
+	
+	@Test
+	public void shouldRetrieveSpecifiedHeadStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().head("/test/url").returnStatus(STATUS_204).response();
+		Head("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().head("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRetrieveHeadStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		Head("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().head("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is("OK"));
+	}
+	
+	@Test
+	public void shouldRetrieveSpecifiedHeadStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().head("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Head("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().head("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is(TEST_VALUE));
 	}
 	
 	@Test
@@ -478,6 +670,44 @@ public class CortxFactoryTest {
 	}
 	
 	@Test
+	public void shouldRetrieveSpecifiedOptionsStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().options("/test/url").returnStatus(STATUS_204).response();
+		Options("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().options("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRetrieveOptionsStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		Options("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().options("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is("OK"));
+	}
+	
+	@Test
+	public void shouldRetrieveSpecifiedOptionsStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().options("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Options("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().options("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is(TEST_VALUE));
+	}
+	
+	@Test
 	public void shouldRetrieveOptionsHeader() throws ClientProtocolException, IOException {
 		// Given
 		Options("http://localhost:7919/test/url").addHeader(CORTX_HEADER, TEST_VALUE).execute();
@@ -518,6 +748,44 @@ public class CortxFactoryTest {
 		
 		// Then
 		assertThat(status, is(200));
+	}
+	
+	@Test
+	public void shouldRetrieveSpecifiedTraceStatusCode() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().trace("/test/url").returnStatus(STATUS_204).response();
+		Trace("http://localhost:7919/test/url").execute();
+		
+		// When
+		final int status = cortx.retrieve().trace("/test/url").statusCode();
+		
+		// Then
+		assertThat(status, is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRetrieveTraceStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		Trace("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().trace("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is("OK"));
+	}
+	
+	@Test
+	public void shouldRetrieveSpecifiedTraceStatusMessage() throws ClientProtocolException, IOException {
+		// Given
+		cortx.on().trace("/test/url").returnStatusMessage(TEST_VALUE).response();
+		Trace("http://localhost:7919/test/url").execute();
+		
+		// When
+		final String message = cortx.retrieve().trace("/test/url").statusMessage();
+		
+		// Then
+		assertThat(message, is(TEST_VALUE));
 	}
 	
 	@Test

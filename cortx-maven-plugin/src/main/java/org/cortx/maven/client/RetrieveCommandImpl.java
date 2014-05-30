@@ -30,7 +30,18 @@ public class RetrieveCommandImpl implements RetrieveCommand {
 
 	@Override
 	public int statusCode() {
-		return response.getStatusLine().getStatusCode();
+		if (response.containsHeader("REGISTER_HTTP_STATUS_CODE")) {
+			return Integer.valueOf(response.getFirstHeader("REGISTER_HTTP_STATUS_CODE").getValue());
+		}
+		return 200;
+	}
+
+	@Override
+	public String statusMessage() {
+		if (response.containsHeader("REGISTER_HTTP_STATUS_MESSAGE")) {
+			return response.getFirstHeader("REGISTER_HTTP_STATUS_MESSAGE").getValue();
+		}
+		return "OK";
 	}
 
 	@Override
@@ -45,8 +56,6 @@ public class RetrieveCommandImpl implements RetrieveCommand {
 
 	@Override
 	public Map<String, String> headers() {
-		if (response == null) return null;
-		
 		final HashMap<String, String> headers = new HashMap<>();
 		for (final Header header : response.getAllHeaders()) {
 			if (header.getName().startsWith(HEADER_PREFIX)) {
@@ -58,7 +67,7 @@ public class RetrieveCommandImpl implements RetrieveCommand {
 
 	@Override
 	public String header(final String name) {
-		if (response != null && response.containsHeader(HEADER_PREFIX + name)) {
+		if (response.containsHeader(HEADER_PREFIX + name)) {
 			return response.getFirstHeader(HEADER_PREFIX + name).getValue();
 		}
 		return null;

@@ -4,6 +4,8 @@ import java.util.Map;
 
 public interface RetrieveCommand {
 	int statusCode();
+
+	String statusMessage();
 	
 	String body();
 

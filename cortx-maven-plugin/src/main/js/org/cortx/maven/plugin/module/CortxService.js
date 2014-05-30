@@ -61,9 +61,20 @@
 		if (processedRequest) {
 			log('\tVerified ' + key + '\n')
 			if (processedRequest.header) {
-				for (var key in processedRequest.header) {
-					if (typeof processedRequest.header[key] !== 'function') {
-						request.response.putHeader('VERIFY_' + key, processedRequest.header[key])
+				for (var hkey in processedRequest.header) {
+					if (typeof processedRequest.header[hkey] !== 'function') {
+						request.response.putHeader('VERIFY_' + hkey, processedRequest.header[hkey])
+					}
+				}
+				var registeredRequest = cortxRegistry.getRegisteredRequest(key);
+				if (registeredRequest) {
+					if (registeredRequest.header['REGISTER_HTTP_STATUS_CODE']) {
+						log(registeredRequest.header['REGISTER_HTTP_STATUS_CODE']);
+						request.response.putHeader('REGISTER_HTTP_STATUS_CODE', registeredRequest.header['REGISTER_HTTP_STATUS_CODE']);
+					}
+					if (registeredRequest.header['REGISTER_HTTP_STATUS_MESSAGE']) {
+						log(registeredRequest.header['REGISTER_HTTP_STATUS_MESSAGE']);
+						request.response.putHeader('REGISTER_HTTP_STATUS_MESSAGE', registeredRequest.header['REGISTER_HTTP_STATUS_MESSAGE']);
 					}
 				}
 			}

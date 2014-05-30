@@ -66,7 +66,7 @@ CortxRegistry.prototype.getProcessedRequest = function(key) {
 	return undefined;
 }
 
-CortxRegistry.prototype.getRegisteredRequests = function(key) {
+CortxRegistry.prototype.getRegisteredRequest = function(key) {
 	if (key && this.registeredRequests[key]) {
 		return this.registeredRequests[key];
 	}	
@@ -96,7 +96,7 @@ CortxRegistry.prototype.processRequest = function(key, request) {
 				}
 			}
 			if (this.registeredRequests[key].body) {
-				this.log('\tReturned body: "' + this.registeredRequests[key].body);
+				this.log('\tReturned body: "' + this.registeredRequests[key].body + '\"\n');
 				request.response.end(this.registeredRequests[key].body);
 				return;
 			}	

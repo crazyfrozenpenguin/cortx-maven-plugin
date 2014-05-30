@@ -36,7 +36,7 @@ describe('The CortxRegistry Spec', function () {
 	it('should retrieve registered request details', function () {
 		// When
 		registry.register(key, request)
-		var result = registry.getRegisteredRequests(key)
+		var result = registry.getRegisteredRequest(key)
 		
 		// Then
 		expect(result).toBeDefined();
