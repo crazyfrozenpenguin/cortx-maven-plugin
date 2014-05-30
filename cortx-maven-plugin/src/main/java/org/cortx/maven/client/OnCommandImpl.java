@@ -36,16 +36,28 @@ public class OnCommandImpl implements OnCommand {
 	}
 
 	@Override
-	public OnCommand returnHeader(String key, String value) {
+	public OnCommand returnHeader(final String key, final String value) {
 		request.addHeader(key, value);
 		return this;
 	}
 
 	@Override
-	public OnCommand returnHeaders(Map<String, String> headers) {
+	public OnCommand returnHeaders(final Map<String, String> headers) {
 		for (final String key : headers.keySet()) {
 			request.addHeader(key, headers.get(key));			
 		}
+		return this;
+	}
+
+	@Override
+	public OnCommand returnStatus(final int status) {
+		request.addHeader("REGISTER_HTTP_STATUS_CODE", String.valueOf(status));
+		return this;
+	}
+
+	@Override
+	public OnCommand returnStatusMessage(final String statusMessage) {
+		request.addHeader("REGISTER_HTTP_STATUS_MESSAGE", statusMessage);
 		return this;
 	}
 

@@ -26,6 +26,7 @@ import org.junit.Test;
 
 public class CortxFactoryTest {
 
+	private static final int STATUS_204 = 204;
 	private static final String CORTX_BODY = "Hello Body!";
 	private static final String TEST_VALUE = "Test Value";
 	private static final String CORTX_HEADER = "Cortx-Header";
@@ -571,6 +572,26 @@ public class CortxFactoryTest {
 	}
 	
 	@Test
+	public void shouldRegisterStatusCodeResponseOnGet() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().get("/test/url").returnStatus(STATUS_204).response();		
+		final Response result = Get("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getStatusCode(), is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRegisterStatusMessageResponseOnGet() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().get("/test/url").returnStatusMessage(TEST_VALUE).response();		
+		final Response result = Get("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getReasonPhrase(), is(TEST_VALUE));
+	}
+	
+	@Test
 	public void shouldRegisterBodyResponseOnPost() throws ClientProtocolException, IOException {
 		// When
 		cortx.on().post("/test/url").returnBody(CORTX_BODY).response();		
@@ -590,6 +611,26 @@ public class CortxFactoryTest {
 		assertThat(result.returnResponse().getFirstHeader(CORTX_HEADER).getValue(), is(TEST_VALUE));
 	}
 
+	@Test
+	public void shouldRegisterStatusCodeResponseOnPost() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().post("/test/url").returnStatus(STATUS_204).response();		
+		final Response result = Post("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getStatusCode(), is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRegisterStatusMessageResponseOnPost() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().post("/test/url").returnStatusMessage(TEST_VALUE).response();		
+		final Response result = Post("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getReasonPhrase(), is(TEST_VALUE));
+	}
+	
 	@Test
 	public void shouldRegisterBodyResponseOnPut() throws ClientProtocolException, IOException {
 		// When
@@ -611,6 +652,26 @@ public class CortxFactoryTest {
 	}
 
 	@Test
+	public void shouldRegisterStatusCodeResponseOnPut() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().put("/test/url").returnStatus(STATUS_204).response();		
+		final Response result = Put("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getStatusCode(), is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRegisterStatusMessageResponseOnPut() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().put("/test/url").returnStatusMessage(TEST_VALUE).response();		
+		final Response result = Put("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getReasonPhrase(), is(TEST_VALUE));
+	}
+	
+	@Test
 	public void shouldRegisterBodyResponseOnDelete() throws ClientProtocolException, IOException {
 		// When
 		cortx.on().delete("/test/url").returnBody(CORTX_BODY).response();		
@@ -630,6 +691,26 @@ public class CortxFactoryTest {
 		assertThat(result.returnResponse().getFirstHeader(CORTX_HEADER).getValue(), is(TEST_VALUE));
 	}
 
+	@Test
+	public void shouldRegisterStatusCodeResponseOnDelete() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().delete("/test/url").returnStatus(STATUS_204).response();		
+		final Response result = Delete("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getStatusCode(), is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRegisterStatusMessageResponseOnDelete() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().delete("/test/url").returnStatusMessage(TEST_VALUE).response();		
+		final Response result = Delete("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getReasonPhrase(), is(TEST_VALUE));
+	}
+	
 	@Test(expected = UnsupportedOperationException.class)
 	public void shoulNotdRegisterBodyResponseOnHead() throws ClientProtocolException, IOException {
 		// When / Then
@@ -646,6 +727,26 @@ public class CortxFactoryTest {
 		assertThat(result.returnResponse().getFirstHeader(CORTX_HEADER).getValue(), is(TEST_VALUE));
 	}
 
+	@Test
+	public void shouldRegisterStatusCodeResponseOnHead() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().head("/test/url").returnStatus(STATUS_204).response();		
+		final Response result = Head("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getStatusCode(), is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRegisterStatusMessageResponseOnHead() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().head("/test/url").returnStatusMessage(TEST_VALUE).response();		
+		final Response result = Head("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getReasonPhrase(), is(TEST_VALUE));
+	}
+	
 	@Test
 	public void shouldRegisterBodyResponseOnOptions() throws ClientProtocolException, IOException {
 		// When
@@ -667,6 +768,26 @@ public class CortxFactoryTest {
 	}
 
 	@Test
+	public void shouldRegisterStatusCodeResponseOnOptions() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().options("/test/url").returnStatus(STATUS_204).response();		
+		final Response result = Options("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getStatusCode(), is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRegisterStatusMessageResponseOnOptions() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().options("/test/url").returnStatusMessage(TEST_VALUE).response();		
+		final Response result = Options("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getReasonPhrase(), is(TEST_VALUE));
+	}
+	
+	@Test
 	public void shouldRegisterBodyResponseOnTrace() throws ClientProtocolException, IOException {
 		// When
 		cortx.on().trace("/test/url").returnBody(CORTX_BODY).response();		
@@ -686,4 +807,24 @@ public class CortxFactoryTest {
 		assertThat(result.returnResponse().getFirstHeader(CORTX_HEADER).getValue(), is(TEST_VALUE));
 	}
 
+	@Test
+	public void shouldRegisterStatusCodeResponseOnTrace() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().trace("/test/url").returnStatus(STATUS_204).response();		
+		final Response result = Trace("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getStatusCode(), is(STATUS_204));
+	}
+	
+	@Test
+	public void shouldRegisterStatusMessageResponseOnTrace() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().trace("/test/url").returnStatusMessage(TEST_VALUE).response();		
+		final Response result = Trace("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getStatusLine().getReasonPhrase(), is(TEST_VALUE));
+	}
+	
 }
