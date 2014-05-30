@@ -1,8 +1,6 @@
 package org.cortx.maven.client;
 
-import static org.apache.http.client.fluent.Request.Get;
 import static org.apache.http.client.fluent.Request.Post;
-import static org.apache.http.client.fluent.Request.Put;
 
 import org.cortx.maven.client.dsl.OnCommand;
 import org.cortx.maven.client.dsl.OnOperation;
@@ -17,20 +15,61 @@ public class OnOperationImpl extends OperationBase implements OnOperation {
 
 	@Override
 	public OnCommand get(final String pathAndQuery) {
-		operation.append(pathAndQuery);
-		return new OnCommandImpl(setDefaults(Get(operation.toString())));
+		return createOnCommandImpl("G/", pathAndQuery);
 	}
 
 	@Override
 	public OnCommand post(final String pathAndQuery) {
-		operation.append(pathAndQuery);
-		return new OnCommandImpl(Post(operation.toString()));
+		return createOnCommandImpl("P/", pathAndQuery);
 	}
 
 	@Override
 	public OnCommand put(final String pathAndQuery) {
-		operation.append(pathAndQuery);
-		return new OnCommandImpl(setDefaults(Put(operation.toString())));
+		return createOnCommandImpl("U/", pathAndQuery);
 	}
 
+	@Override
+	public OnCommand delete(final String pathAndQuery) {
+		return createOnCommandImpl("D/", pathAndQuery);
+	}
+
+	@Override
+	public OnCommand head(final String pathAndQuery) {
+		return createNoBodyOnCommandImpl("H/", pathAndQuery);
+	}
+
+	@Override
+	public OnCommand options(final String pathAndQuery) {
+		return createOnCommandImpl("O/", pathAndQuery);
+	}
+
+	@Override
+	public OnCommand connect(final String pathAndQuery) {
+		return createOnCommandImpl("C/", pathAndQuery);
+	}
+
+	@Override
+	public OnCommand trace(final String pathAndQuery) {
+		return createOnCommandImpl("T/", pathAndQuery);
+	}
+
+	@Override
+	public OnCommand patch(final String pathAndQuery) {
+		return createOnCommandImpl("A/", pathAndQuery);
+	}
+
+	private OnCommand createOnCommandImpl(final String descriminator, final String pathAndQuery) {
+		final String url = operation.append(normalizeUrl(descriminator + pathAndQuery)).toString();
+		return new OnCommandImpl(setDefaults(Post(url)));
+	}
+
+	private OnCommand createNoBodyOnCommandImpl(final String descriminator, final String pathAndQuery) {
+		final String url = operation.append(normalizeUrl(descriminator + pathAndQuery)).toString();
+		return new NoBodyOnCommandImpl(setDefaults(Post(url)));
+	}
+	
+	private String normalizeUrl(final String url) {
+		return url.replaceAll("//", "/");
+	}
+	
 }

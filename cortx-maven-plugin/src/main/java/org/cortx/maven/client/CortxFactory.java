@@ -26,7 +26,7 @@ public class CortxFactory implements Cortx {
 
 	@Override
 	public OnOperation on() {
-		operation = new StringBuffer(cortxUrl.toString()).append("/~");
+		operation = new StringBuffer(cortxUrl.toString()).append("/~/");
 		return new OnOperationImpl(operation);
 	}
 
