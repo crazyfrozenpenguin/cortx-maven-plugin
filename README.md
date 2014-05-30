@@ -73,20 +73,20 @@ Cortx DSL Client usage
 #### Response Registration
 
     // Register response for when a given REST end-point url is hit
-    cortx.on().get("/my/app/url?with=params").returns(jsonString);
+    cortx.on().get("/my/app/url?with=params").returnBody(jsonString).returnHeader("Content-Type", "application/json;").response();
     
-Available commands are: get(url), post(url) - other commands to be supported soon
+Available commands are: get, post, put, delete, head, options and trace
 
-Available actions are: returns(body) - other return such as desired HTTP status, headers, etc to come soon.
+Available actions are: returnBody(body:String), returnHeader(key:String, value:String), returnHeaders(headers:Map<String,String>), returnStatusCode(code:int), returnStatusMessage(msg:String)
     
 #### Retrieve request details
 
     // Retrieve submitted request information
     final String requestBody = cortx.retrieve().post("/my/app/url?with=params").body();
     
-Available commands are get(url), post(url) - others to be supported soon
+Available commands are: get, post, put, delete, head, options and trace
 
-Available actions are body() - others such as request header(s) will come soon
+Available actions are body():String, header(key:String):String, headers():Map<String, String>
 
 #### Verification/Validation
 
