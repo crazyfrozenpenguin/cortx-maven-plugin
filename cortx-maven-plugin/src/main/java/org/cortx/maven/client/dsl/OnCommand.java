@@ -11,4 +11,8 @@ public interface OnCommand {
 	OnCommand returnHeader(final String key, final String value);
 	
 	OnCommand returnHeaders(final Map<String, String> headers);
+	
+	OnCommand returnStatus(final int status);
+
+	OnCommand returnStatusMessage(final String statusMessage);
 }
