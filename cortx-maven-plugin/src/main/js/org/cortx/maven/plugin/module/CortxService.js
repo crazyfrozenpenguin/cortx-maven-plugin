@@ -23,6 +23,10 @@
 			this.handleRegistration(request)
 		} else if (path.startsWith('/_/')) {
 			this.handleVerification(request)
+		} else if (path.startsWith('/$')) {
+			cortxRegistry.reset()
+			log('Registry reset.')
+			request.response.end()
 		} else { 
 			this.handleAPIRequest(request)
 		}
@@ -30,20 +34,29 @@
 	
 	this.handleAPIRequest = function(request) {
 		log('Process REST API call...');
+		var method = request.method();
 		var key = cortx.createKey(request);
 		cortxRegistry.processRequest(key, request);
 	}
 
 	this.handleRegistration = function(request) {
 		log('Process registration...')
-		var key = cortx.createKey(request)
-		cortxRegistry.register(key, request)
+
+		var key = cortx.createKey(request);
+		
+		var method = request.method();
+		if (method != 'POST' && method != 'PUT') {
+			this.unknownRequest(request, key);
+		} else {
+			cortxRegistry.register(key, request);
+		}
 	}
 	
 	this.handleVerification = function(request) {
 		log('Process verification...');
 		
 		var key = cortx.createKey(request);
+		
 		var processedRequest = cortxRegistry.getProcessedRequest(key);
 		if (processedRequest) {
 			log('\tVerified ' + key + '\n')
@@ -64,9 +77,13 @@
 			return;
 		}
 		
+		this.unknownRequest(request, key);
+	}
+
+	this.unknownRequest = function(request, key) {
 		var message = '\tUnknown request: ' + key;
 		log(message)
 	    request.response.statusCode(404).statusMessage(message).end();
 	}
-
+	
 }).apply(cortx);

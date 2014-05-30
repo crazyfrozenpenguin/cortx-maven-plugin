@@ -14,12 +14,18 @@ import org.slf4j.Logger;
 
 public class RetrieveCommandImpl implements RetrieveCommand {
 
+	private static final String HEADER_PREFIX = "VERIFY_";
+
 	private static Logger logger = getLogger(RetrieveCommandImpl.class);
 
 	private HttpResponse response;
 
-	public RetrieveCommandImpl(final Request request) throws Exception {
-		response = request.execute().returnResponse();
+	public RetrieveCommandImpl(final Request request) {
+		try {
+			response = request.execute().returnResponse();
+		} catch (final Exception e) {
+			logger.error("Failed to retrieve: ", e);
+		}
 	}
 
 	@Override
@@ -43,14 +49,19 @@ public class RetrieveCommandImpl implements RetrieveCommand {
 		
 		final HashMap<String, String> headers = new HashMap<>();
 		for (final Header header : response.getAllHeaders()) {
-			headers.put(header.getName(), header.getValue());
+			if (header.getName().startsWith(HEADER_PREFIX)) {
+				headers.put(header.getName().replace(HEADER_PREFIX, ""), header.getValue());
+			}
 		}
 		return headers;
 	}
 
 	@Override
 	public String header(final String name) {
-		return response == null ? null : response.getFirstHeader(name).getValue();
+		if (response != null && response.containsHeader(HEADER_PREFIX + name)) {
+			return response.getFirstHeader(HEADER_PREFIX + name).getValue();
+		}
+		return null;
 	}
 
 }

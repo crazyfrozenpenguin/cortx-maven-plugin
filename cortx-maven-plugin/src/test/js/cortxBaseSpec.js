@@ -32,16 +32,103 @@ describe('The Cortx Base Spec', function () {
 		expect(key).toBe('HEAD:' + context)
 	})
 	
-	it('should create key for registration request', function () {
+	it('should create key for GET registration request', function () {
 		// Given
-		request.uriValue = '/~' + context
-		request.methodName = 'DELETE'
-			
+		request.uriValue = '/~/G' + context
+		
+		// When
+		var key = cortx.createKey(request)
+		
+		// Then
+		expect(key).toBe('GET:' + context)
+	})
+
+	it('should create key for POST registration request', function () {
+		// Given
+		request.uriValue = '/~/P' + context
+		
+		// When
+		var key = cortx.createKey(request)
+		
+		// Then
+		expect(key).toBe('POST:' + context)
+	})
+
+	it('should create key for PUT registration request', function () {
+		// Given
+		request.uriValue = '/~/U' + context
+		
+		// When
+		var key = cortx.createKey(request)
+		
+		// Then
+		expect(key).toBe('PUT:' + context)
+	})
+
+	it('should create key for DELETE registration request', function () {
+		// Given
+		request.uriValue = '/~/D' + context
+		
 		// When
 		var key = cortx.createKey(request)
 		
 		// Then
 		expect(key).toBe('DELETE:' + context)
+	})
+
+	it('should create key for HEAD registration request', function () {
+		// Given
+		request.uriValue = '/~/H' + context
+		
+		// When
+		var key = cortx.createKey(request)
+		
+		// Then
+		expect(key).toBe('HEAD:' + context)
+	})
+
+	it('should create key for HEAD registration request', function () {
+		// Given
+		request.uriValue = '/~/O' + context
+		
+		// When
+		var key = cortx.createKey(request)
+		
+		// Then
+		expect(key).toBe('OPTIONS:' + context)
+	})
+
+	it('should create key for CONNECT registration request', function () {
+		// Given
+		request.uriValue = '/~/C' + context
+		
+		// When
+		var key = cortx.createKey(request)
+		
+		// Then
+		expect(key).toBe('CONNECT:' + context)
+	})
+
+	it('should create key for TRACE registration request', function () {
+		// Given
+		request.uriValue = '/~/T' + context
+		
+		// When
+		var key = cortx.createKey(request)
+		
+		// Then
+		expect(key).toBe('TRACE:' + context)
+	})
+
+	it('should create key for PATCH registration request', function () {
+		// Given
+		request.uriValue = '/~/A' + context
+		
+		// When
+		var key = cortx.createKey(request)
+		
+		// Then
+		expect(key).toBe('PATCH:' + context)
 	})
 	
 	it('should create key for GET verification request', function () {
@@ -142,4 +229,7 @@ describe('The Cortx Base Spec', function () {
 		// Then
 		expect(key).toBe('PATCH:' + context)
 	})
+
+	
 });
+

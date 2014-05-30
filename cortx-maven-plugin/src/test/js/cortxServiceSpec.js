@@ -13,6 +13,7 @@ describe('The Cortx Service Spec', function () {
 	
 	beforeEach(function () {
 		request = new Request()
+
 		registry = CortxRegistry.instance()
 	})
 	
@@ -39,7 +40,7 @@ describe('The Cortx Service Spec', function () {
 	
 	it('should handle registration requests', function () {
 		// Given
-		request.uriValue = '/~/my/uri?x=y'
+		request.uriValue = '/~/G/my/uri?x=y'
 		spyOn(cortx, 'handleRegistration')
 		
 		// When
@@ -73,9 +74,11 @@ describe('The Cortx Service Spec', function () {
 		expect(cortx.handleVerification).toHaveBeenCalledWith(request)				
 	})
 
-	it('should process registration request', function () {
+	it('should process registration on POST request', function () {
 		// Given
-		request.uriValue = '/~/my/uri?x=y'
+		request.uriValue = '/~/G/my/uri?x=y';
+		request.methodName = 'POST'
+
 		var key = cortx.createKey(request)
 		spyOn(registry, 'register')
 		
@@ -86,6 +89,38 @@ describe('The Cortx Service Spec', function () {
 		expect(registry.register).toHaveBeenCalledWith(key, request)
 	})
 
+	it('should process registration on PUT request', function () {
+		// Given
+		request.uriValue = '/~/G/my/uri?x=y';
+		request.methodName = 'PUT'
+
+		var key = cortx.createKey(request)
+		spyOn(registry, 'register')
+		
+		// When
+		cortx.handleRegistration(request)
+		
+		// Then
+		expect(registry.register).toHaveBeenCalledWith(key, request)
+	})
+
+	it('should not process registration on non PUT or POST request', function () {
+		// Given
+		request.uriValue = '/~/G/my/uri?x=y';
+		request.methodName = 'DELETE'
+
+		var key = cortx.createKey(request)
+		spyOn(registry, 'register')
+		
+		// When
+		cortx.handleRegistration(request)
+		
+		// Then
+		expect(registry.register).not.toHaveBeenCalledWith(key, request)
+		expect(request.statusCode).toBe(404)
+		expect(request.statusMessage).toBe('\tUnknown request: ' + key)
+	})
+	
 	it('should process API/REST request', function () {
 		// Given
 		request.uriValue = '/my/uri?x=y'
@@ -139,4 +174,16 @@ describe('The Cortx Service Spec', function () {
 		expect(request.response.end.mostRecentCall.args[0].toString()).toBe(request.body)
 	})
 
+	it('should reset registry', function () {
+		// Given
+		request.uriValue = '/$'
+		spyOn(CortxRegistry.instance(), 'reset')
+		
+		// When
+		cortx.requestHandler(request)
+		
+		// Then
+		expect(CortxRegistry.instance().reset).toHaveBeenCalled()
+	})
+	
 });

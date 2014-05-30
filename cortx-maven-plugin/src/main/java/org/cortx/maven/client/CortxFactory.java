@@ -1,5 +1,7 @@
 package org.cortx.maven.client;
 
+import static org.apache.http.client.fluent.Request.Get;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -24,7 +26,7 @@ public class CortxFactory implements Cortx {
 
 	@Override
 	public OnOperation on() {
-		operation = new StringBuffer(cortxUrl.toString()).append("/~");
+		operation = new StringBuffer(cortxUrl.toString()).append("/~/");
 		return new OnOperationImpl(operation);
 	}
 
@@ -38,6 +40,16 @@ public class CortxFactory implements Cortx {
 	public RetrieveOperation retrieve() {
 		operation = new StringBuffer(cortxUrl.toString()).append("/_/");
 		return new RetrieveOperationImpl(operation);
+	}
+
+	@Override
+	public boolean reset() {
+		operation = new StringBuffer(cortxUrl.toString()).append("/$");
+		try {
+			return Get(operation.toString()).execute().returnResponse().getStatusLine().getStatusCode() == 200;
+		} catch (final Exception e) {
+		}
+		return false;
 	}
 
 	private CortxFactory(final String host, final int port) throws URISyntaxException {

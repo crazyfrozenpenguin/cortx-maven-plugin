@@ -6,12 +6,16 @@ var CortxRegistry = function() {
 
 	CortxRegistry.prototype._singletonInstance = this;
 	
-	this.registeredRequests = {};
-	this.processedRequests = {};
-
 	this.log = CortxLogger.instance().logger;
+
+	this.reset();
 	
 	return this;
+}
+
+CortxRegistry.prototype.reset = function() {
+	this.registeredRequests = {};
+	this.processedRequests = {};	
 }
 
 CortxRegistry.prototype.createRequestEntry = function(header, body) {
@@ -75,10 +79,21 @@ CortxRegistry.prototype.processRequest = function(key, request) {
 		
 		this.log('\tRequest: ' + key + '\n\tBody: "' + body.toString() + '"');
 		
-		if (this.registeredRequests[key] && this.registeredRequests[key].body) {
-			this.log('\n\tRequest response found: ' + key + '\n\tReturned body: "' + this.registeredRequests[key].body + '"\n');
-			request.response.end(this.registeredRequests[key].body);
-			return;
+		if (this.registeredRequests[key]) {
+			this.log('\tRequest response found: ' + key + '\n');
+			if (this.registeredRequests[key].header) {
+				for (var hkey in this.registeredRequests[key].header) {
+					if (typeof this.registeredRequests[key].header[hkey] !== 'function') {
+						this.log('\tReturned header: "' + this.registeredRequests[key].header[hkey] + '\"');
+						request.response.putHeader(hkey, this.registeredRequests[key].header[hkey]);
+					}
+				}
+			}
+			if (this.registeredRequests[key].body) {
+				this.log('\tReturned body: "' + this.registeredRequests[key].body);
+				request.response.end(this.registeredRequests[key].body);
+				return;
+			}	
 		}
 		
 		request.response.end();

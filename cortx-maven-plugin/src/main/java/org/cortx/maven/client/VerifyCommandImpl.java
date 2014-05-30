@@ -16,11 +16,11 @@ import org.slf4j.Logger;
 
 public class VerifyCommandImpl implements VerifyCommand {
 
-	private static Logger logger = getLogger(VerifyCommandImpl.class);
+	protected static Logger logger = getLogger(VerifyCommandImpl.class);
 
-	private final Request request;
-	private String body;
-	private Map<String, String> header = new HashMap<String, String>();
+	protected final Request request;
+	protected String body;
+	protected Map<String, String> header = new HashMap<String, String>();
 
 	public VerifyCommandImpl(final Request request) {
 		this.request = request;

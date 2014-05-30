@@ -16,7 +16,7 @@ public class VerifyOperationImpl extends OperationBase implements VerifyOperatio
 	@Override
 	public VerifyCommand get(final String pathAndQuery) {
 		operation.append("G").append(pathAndQuery);
-		return new VerifyCommandImpl(setDefaults(Get(operation.toString())));
+		return new NoBodyVerifyCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
@@ -34,19 +34,19 @@ public class VerifyOperationImpl extends OperationBase implements VerifyOperatio
 	@Override
 	public VerifyCommand delete(final String pathAndQuery) {
 		operation.append("D").append(pathAndQuery);
-		return new VerifyCommandImpl(setDefaults(Get(operation.toString())));
+		return new NoBodyVerifyCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
 	public VerifyCommand head(final String pathAndQuery) {
 		operation.append("H").append(pathAndQuery);
-		return new VerifyCommandImpl(setDefaults(Get(operation.toString())));
+		return new NoBodyVerifyCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
 	public VerifyCommand options(final String pathAndQuery) {
 		operation.append("O").append(pathAndQuery);
-		return new VerifyCommandImpl(setDefaults(Get(operation.toString())));
+		return new NoBodyVerifyCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class VerifyOperationImpl extends OperationBase implements VerifyOperatio
 	@Override
 	public VerifyCommand trace(final String pathAndQuery) {
 		operation.append("T").append(pathAndQuery);
-		return new VerifyCommandImpl(setDefaults(Get(operation.toString())));
+		return new NoBodyVerifyCommandImpl(setDefaults(Get(operation.toString())));
 	}
 
 	@Override
