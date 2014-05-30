@@ -11,7 +11,27 @@ var cortx = {
 	this.createKey = function(request) {
 		var uri = request.uri()
 		if (uri.startsWith('/~/')) {
-			uri = uri.substring(2)
+			var context = uri.substring(4);
+			
+			if (uri.startsWith('/~/G/')) {
+				return 'GET:' + context;
+			} else if (uri.startsWith('/~/P/')) {
+				return 'POST:' + context;
+			} else if (uri.startsWith('/~/U/')) {
+				return 'PUT:' + context;
+			} else if (uri.startsWith('/~/D/')) {
+				return 'DELETE:' + context;
+			} else if (uri.startsWith('/~/H/')) {
+				return 'HEAD:' + context;
+			} else if (uri.startsWith('/~/O/')) {
+				return 'OPTIONS:' + context;
+			} else if (uri.startsWith('/~/C/')) {
+				return 'CONNECT:' + context;
+			} else if (uri.startsWith('/~/T/')) {
+				return 'TRACE:' + context;
+			} else if (uri.startsWith('/~/A/')) {
+				return 'PATCH:' + context;
+			}
 		} else if (uri.startsWith('/_/')) { 
 			var context = uri.substring(4);
 			

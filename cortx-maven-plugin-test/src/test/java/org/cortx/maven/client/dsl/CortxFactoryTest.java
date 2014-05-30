@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.Map;
 
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.fluent.Response;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -548,4 +549,141 @@ public class CortxFactoryTest {
 		// Given/When/Then
 		cortx.retrieve().trace("/test/url").body();
 	}
+	
+	@Test
+	public void shouldRegisterBodyResponseOnGet() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().get("/test/url").returnBody(CORTX_BODY).response();		
+		final Response result = Get("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnContent().asString(), is(CORTX_BODY));
+	}
+	
+	@Test
+	public void shouldRegisterHeaderResponseOnGet() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().get("/test/url").returnHeader(CORTX_HEADER, TEST_VALUE).response();		
+		final Response result = Get("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getFirstHeader(CORTX_HEADER).getValue(), is(TEST_VALUE));
+	}
+	
+	@Test
+	public void shouldRegisterBodyResponseOnPost() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().post("/test/url").returnBody(CORTX_BODY).response();		
+		final Response result = Post("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnContent().asString(), is(CORTX_BODY));
+	}
+	
+	@Test
+	public void shouldRegisterHeaderResponseOnPost() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().post("/test/url").returnHeader(CORTX_HEADER, TEST_VALUE).response();		
+		final Response result = Post("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getFirstHeader(CORTX_HEADER).getValue(), is(TEST_VALUE));
+	}
+
+	@Test
+	public void shouldRegisterBodyResponseOnPut() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().put("/test/url").returnBody(CORTX_BODY).response();		
+		final Response result = Put("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnContent().asString(), is(CORTX_BODY));
+	}
+	
+	@Test
+	public void shouldRegisterHeaderResponseOnPut() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().put("/test/url").returnHeader(CORTX_HEADER, TEST_VALUE).response();		
+		final Response result = Put("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getFirstHeader(CORTX_HEADER).getValue(), is(TEST_VALUE));
+	}
+
+	@Test
+	public void shouldRegisterBodyResponseOnDelete() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().delete("/test/url").returnBody(CORTX_BODY).response();		
+		final Response result = Delete("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnContent().asString(), is(CORTX_BODY));
+	}
+	
+	@Test
+	public void shouldRegisterHeaderResponseOnDelete() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().delete("/test/url").returnHeader(CORTX_HEADER, TEST_VALUE).response();		
+		final Response result = Delete("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getFirstHeader(CORTX_HEADER).getValue(), is(TEST_VALUE));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void shoulNotdRegisterBodyResponseOnHead() throws ClientProtocolException, IOException {
+		// When / Then
+		cortx.on().head("/test/url").returnBody(CORTX_BODY).response();
+	}
+	
+	@Test
+	public void shouldRegisterHeaderResponseOnHead() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().head("/test/url").returnHeader(CORTX_HEADER, TEST_VALUE).response();		
+		final Response result = Head("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getFirstHeader(CORTX_HEADER).getValue(), is(TEST_VALUE));
+	}
+
+	@Test
+	public void shouldRegisterBodyResponseOnOptions() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().options("/test/url").returnBody(CORTX_BODY).response();		
+		final Response result = Options("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnContent().asString(), is(CORTX_BODY));
+	}
+	
+	@Test
+	public void shouldRegisterHeaderResponseOnOptions() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().options("/test/url").returnHeader(CORTX_HEADER, TEST_VALUE).response();		
+		final Response result = Options("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getFirstHeader(CORTX_HEADER).getValue(), is(TEST_VALUE));
+	}
+
+	@Test
+	public void shouldRegisterBodyResponseOnTrace() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().trace("/test/url").returnBody(CORTX_BODY).response();		
+		final Response result = Trace("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnContent().asString(), is(CORTX_BODY));
+	}
+	
+	@Test
+	public void shouldRegisterHeaderResponseOnTrace() throws ClientProtocolException, IOException {
+		// When
+		cortx.on().trace("/test/url").returnHeader(CORTX_HEADER, TEST_VALUE).response();		
+		final Response result = Trace("http://localhost:7919/test/url").execute();
+		
+		// Then
+		assertThat(result.returnResponse().getFirstHeader(CORTX_HEADER).getValue(), is(TEST_VALUE));
+	}
+
 }
