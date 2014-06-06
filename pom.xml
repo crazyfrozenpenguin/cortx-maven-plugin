@@ -110,11 +110,6 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.dynjs</groupId>
-				<artifactId>dynjs</artifactId>
-				<version>0.2.2</version>
-			</dependency>
-			<dependency>
 				<groupId>io.vertx</groupId>
 				<artifactId>lang-js</artifactId>
 				<version>1.1.0</version>
@@ -126,18 +121,6 @@
 				<artifactId>junit</artifactId>
 				<version>4.11</version>
 				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.github.akiellor.jasmine</groupId>
-				<artifactId>jasmine-cli</artifactId>
-				<version>0.0.12</version>
-				<scope>test</scope>
-				<exclusions>
-					<exclusion>
-						<groupId>org.dynjs</groupId>
-						<artifactId>dynjs</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
