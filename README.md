@@ -24,7 +24,7 @@ Starts the cortx server in blocking mode.
     <plugin>
       <groupId>org.cortx</groupId>
       <artifactId>cortx-maven-plugin</artifactId>
-      <version>0.1.1</version>
+      <version>0.1.2</version>
       <configuration>
       	<log>true</log>
       	<port>7919</port>
@@ -56,7 +56,7 @@ Cortx DSL Client usage
    	<dependency>
       <groupId>org.cortx</groupId>
       <artifactId>cortx-maven-plugin</artifactId>
-      <version>0.1.1</version>
+      <version>0.1.2</version>
       <scope>test</scope>
     </dependency>
 
