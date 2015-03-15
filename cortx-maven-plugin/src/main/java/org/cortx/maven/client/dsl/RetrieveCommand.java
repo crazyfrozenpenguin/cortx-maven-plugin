@@ -3,13 +3,13 @@ package org.cortx.maven.client.dsl;
 import java.util.Map;
 
 public interface RetrieveCommand {
-	int statusCode();
+    int statusCode();
 
-	String statusMessage();
-	
-	String body();
+    String statusMessage();
 
-	Map<String, String> headers();
+    String body();
 
-	String header(final String name);
+    Map<String, String> headers();
+
+    String header(final String name);
 }

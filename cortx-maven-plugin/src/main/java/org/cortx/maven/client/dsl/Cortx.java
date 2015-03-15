@@ -1,11 +1,11 @@
 package org.cortx.maven.client.dsl;
 
 public interface Cortx {
-	OnOperation on();
+    OnOperation on();
 
-	VerifyOperation verify();
+    VerifyOperation verify();
 
-	RetrieveOperation retrieve();
-	
-	boolean reset();
+    RetrieveOperation retrieve();
+
+    boolean reset();
 }

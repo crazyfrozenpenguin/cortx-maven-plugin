@@ -5,16 +5,16 @@ import org.cortx.maven.client.dsl.OnCommand;
 
 public class NoBodyOnCommandImpl extends OnCommandImpl {
 
-	private final String requestCommand;
+    private final String requestCommand;
 
-	public NoBodyOnCommandImpl(Request request) {
-		super(request);
-		this.requestCommand = request.getClass().getSimpleName();
-	}
+    public NoBodyOnCommandImpl(final Request request) {
+        super(request);
+        requestCommand = request.getClass().getSimpleName();
+    }
 
-	@Override
-	public OnCommand returnBody(String body) {
-		throw new UnsupportedOperationException(this.requestCommand + " operation does not allow for body content.");
-	}
+    @Override
+    public OnCommand returnBody(final String body) {
+        throw new UnsupportedOperationException(requestCommand + " operation does not allow for body content.");
+    }
 
 }
