@@ -10,7 +10,7 @@
 
     <groupId>org.cortx</groupId>
     <artifactId>cortx-maven-plugin-base</artifactId>
-    <version>0.1.3-SNAPSHOT</version>
+    <version>0.1.3</version>
     <packaging>pom</packaging>
 
     <name>cortx-maven-plugin-proj</name>
